@@ -21,8 +21,8 @@ module Refinery
 
       acts_as_indexed :fields => [:title, :body]
 
-      validates :title, :presence => true, :uniqueness => true
-      validates :body,  :presence => true
+#      validates :title, :presence => true, :uniqueness => true
+#      validates :body,  :presence => true
 
       validates :source_url, :url => { :if => 'Refinery::Blog.validate_source_url',
                                       :update => true,
@@ -33,6 +33,12 @@ module Refinery
       attr_accessible :title, :body, :custom_teaser, :tag_list, :draft, :published_at, :custom_url, :author
       attr_accessible :browser_title, :meta_keywords, :meta_description, :user_id, :category_ids
       attr_accessible :source_url, :source_url_title
+
+      translates :title, :body, :custom_teaser
+      
+      class Translation
+        attr_accessible :locale
+      end
 
       self.per_page = Refinery::Blog.posts_per_page
 
