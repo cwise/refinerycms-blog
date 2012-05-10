@@ -5,7 +5,9 @@ module Refinery
       protected
     
         def find_blog_post
-          unless (@post = Refinery::Blog::Post.find(params[:id])).try(:live?)
+          prescope = current_refinery_user ? Refinery::Blog::Post.visible_to_members : Refinery::Blog::Post.visible_to_public
+           
+          unless (@post = prescope.find(params[:id])).try(:live?)
             if refinery_user? and current_refinery_user.authorized_plugins.include?("refinerycms_blog")
               @post = Refinery::Blog::Post.find(params[:id])
             else
@@ -15,7 +17,8 @@ module Refinery
         end
     
         def find_all_blog_posts
-          @posts = Refinery::Blog::Post.live.includes(:comments, :categories).page(params[:page])
+          prescope = current_refinery_user ? Refinery::Blog::Post.visible_to_members : Refinery::Blog::Post.visible_to_public
+          @posts = prescope.live.includes(:comments, :categories).page(params[:page])
         end
 
         def find_tags

@@ -32,8 +32,10 @@ module Refinery
 
       attr_accessible :title, :body, :custom_teaser, :tag_list, :draft, :published_at, :custom_url, :author
       attr_accessible :browser_title, :meta_keywords, :meta_description, :user_id, :category_ids
-      attr_accessible :source_url, :source_url_title
-
+      attr_accessible :source_url, :source_url_title, :members_only
+      scope :visible_to_public, where(:members_only => false)   
+      scope :visible_to_members, scoped
+      
       translates :title, :body, :custom_teaser
       
       class Translation
@@ -52,6 +54,10 @@ module Refinery
 
       def live?
         !draft and published_at <= Time.now
+      end
+
+      def publicly_visible?
+        live? && !members_only
       end
 
       def friendly_id_source

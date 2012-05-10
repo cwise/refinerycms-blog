@@ -17,6 +17,6 @@ class CreateBlogTranslationTables < ActiveRecord::Migration
     add_column Refinery::Blog::Post.table_name, :body, :text
     add_column Refinery::Blog::Post.table_name, :custom_teaser, :text
 
-   Refinery::Blog::Post.table_name.drop_translation_table! :migrate_data => true
+   Refinery::Blog::Post.drop_translation_table! :migrate_data => true
   end
 end
