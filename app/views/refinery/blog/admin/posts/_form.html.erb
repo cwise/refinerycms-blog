@@ -62,6 +62,11 @@
     <%= f.text_field :tag_list, :class => 'larger' -%>
   </div>
 
+  <div class='field'>
+    <%= f.label :french_tag_list, 'French ' + t('refinery.blog.shared.tags.title') -%>
+    <%= f.text_field :french_tag_list, :class => 'larger' -%>
+  </div>
+
   <div id='more_options_field'>
     <p>
       <%= link_to t('.advanced_options'), "#",

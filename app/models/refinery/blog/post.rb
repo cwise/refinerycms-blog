@@ -15,6 +15,7 @@ module Refinery
 
       has_many :comments, :dependent => :destroy, :foreign_key => :blog_post_id
       acts_as_taggable
+      acts_as_taggable_on :french_tags
 
       has_many :categorizations, :dependent => :destroy, :foreign_key => :blog_post_id
       has_many :categories, :through => :categorizations, :source => :blog_category
@@ -32,7 +33,7 @@ module Refinery
 
       attr_accessible :title, :body, :custom_teaser, :tag_list, :draft, :published_at, :custom_url, :author
       attr_accessible :browser_title, :meta_keywords, :meta_description, :user_id, :category_ids
-      attr_accessible :source_url, :source_url_title, :members_only
+      attr_accessible :source_url, :source_url_title, :members_only, :french_tag_list
       scope :visible_to_public, where(:members_only => false)   
       scope :visible_to_members, scoped
       

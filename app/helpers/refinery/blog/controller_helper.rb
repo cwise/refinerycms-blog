@@ -22,7 +22,8 @@ module Refinery
         end
 
         def find_tags
-          @tags = Refinery::Blog::Post.tag_counts_on(:tags)
+          sym=Refinery.i18n_enabled? ? (Thread.current[:globalize_locale]==:fr ? :french_tags : :tags) : :tags
+          @tags = Refinery::Blog::Post.tag_counts_on(sym)
         end
         def find_all_blog_categories
           @categories = Refinery::Blog::Category.all
