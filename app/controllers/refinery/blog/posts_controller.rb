@@ -73,7 +73,8 @@ module Refinery
       def tagged
         @tag = ActsAsTaggableOn::Tag.find(params[:tag_id])
         @tag_name = @tag.name
-        @posts = Post.tagged_with(@tag_name).page(params[:page])
+        prescope = current_refinery_user ? Refinery::Blog::Post.visible_to_members : Refinery::Blog::Post.visible_to_public
+        @posts = prescope.tagged_with(@tag_name).page(params[:page])
       end
 
     protected
